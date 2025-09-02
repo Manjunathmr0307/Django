@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form</title>
+</head>
+<body>
+    <h1>Form</h1>
+
+    <h2>Create (POST)</h2>
+    <form onsubmit="sendRequest(event, 'POST')">
+        Title: <input type="text" name="title" required><br>
+        Author: <input type="text" name="author" required><br>
+        <button type="submit">Create</button>
+    </form>
+
+    <hr>
+
+
+    <h2>Update (PUT)</h2>
+    <form onsubmit="sendRequest(event, 'PUT')">
+        ID: <input type="number" name="id" required><br>
+        New Title: <input type="text" name="title"><br>
+        New Author: <input type="text" name="author"><br>
+        <button type="submit">Update</button>
+    </form>
+
+    <hr>
+
+    <h2>Delete (DELETE)</h2>
+    <form onsubmit="sendRequest(event, 'DELETE')">
+        ID: <input type="number" name="id" required><br>
+        <button type="submit">Delete</button>
+    </form>
+
+    <hr>
+
+    <h2>Read (GET)</h2>
+    <button onclick="fetch('/api/echo/').then(r => r.json()).then(d => document.getElementById('output').textContent = JSON.stringify(d, null, 2))">
+        Fetch All
+    </button>
+
+    <hr>
+    <h2>Response:</h2>
+    <pre id="output" style="background:#eee; padding:10px;"></pre>
+</body>
+</html>
