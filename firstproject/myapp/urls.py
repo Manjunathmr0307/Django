@@ -1,18 +1,14 @@
-from django.urls import path, include
-from django.shortcuts import render
-from rest_framework.routers import DefaultRouter
-from . import views
-from .views import Echo, echo_form, StudentViewSet
-
-
-router = DefaultRouter()
-router.register(r'students', StudentViewSet)
-
+from django.urls import path
+from .views.view_django import echo, login_view
+from .views.view_django import logout_view
+from .views.view_mongo import create_student, list_students, update_student, delete_student
 
 urlpatterns = [
-    path("hello/", views.hello, name="hello"),
-    path("echo/", Echo.as_view(), name="echo"),
-    path("form/", echo_form, name="echo_form"),
-    path('', include(router.urls)),
-
+    path("", login_view, name="login"),
+    path("echo_form/", echo, name="echo"),
+    path("logout/", logout_view, name="logout"),
+    path('mongo/create/', create_student),
+    path('mongo/list/', list_students),
+    path('mongo/update/',update_student),
+    path('mongo/delete/',delete_student),
 ]

@@ -3,10 +3,29 @@
 <head>
     <title>Form</title>
 </head>
+
+    <style>
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 4px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background: #b52a37;
+        }
+    </style>
 <body>
+    <a href="{% url 'logout' %}"><button class="logout-btn">Logout</button></a>
     <h1>Form</h1>
 
-    <h2>Create (POST)</h2>
+    <h2>Create</h2>
     <form onsubmit="sendRequest(event, 'POST')">
         Title: <input type="text" name="title" required><br>
         Author: <input type="text" name="author" required><br>
@@ -15,8 +34,7 @@
 
     <hr>
 
-
-    <h2>Update (PUT)</h2>
+    <h2>Update</h2>
     <form onsubmit="sendRequest(event, 'PUT')">
         ID: <input type="number" name="id" required><br>
         New Title: <input type="text" name="title"><br>
@@ -26,7 +44,7 @@
 
     <hr>
 
-    <h2>Delete (DELETE)</h2>
+    <h2>Delete</h2>
     <form onsubmit="sendRequest(event, 'DELETE')">
         ID: <input type="number" name="id" required><br>
         <button type="submit">Delete</button>
@@ -34,13 +52,45 @@
 
     <hr>
 
-    <h2>Read (GET)</h2>
-    <button onclick="fetch('/api/echo/').then(r => r.json()).then(d => document.getElementById('output').textContent = JSON.stringify(d, null, 2))">
+    <h2>Read</h2>
+    <button onclick="fetchData()">
         Fetch All
     </button>
 
     <hr>
     <h2>Response:</h2>
     <pre id="output" style="background:#eee; padding:10px;"></pre>
+
+    <script>
+    function sendRequest(event, method) {
+        event.preventDefault(); // prevent form reload
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData.entries());
+
+        fetch("/api/echo/", {
+            method: method,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(d => {
+            document.getElementById("output").textContent = JSON.stringify(d, null, 2);
+        })
+        .catch(err => {
+            document.getElementById("output").textContent = "Error: " + err;
+        });
+    }
+
+    function fetchData() {
+        fetch("/api/echo/")
+        .then(r => r.json())
+        .then(d => {
+            document.getElementById("output").textContent = JSON.stringify(d, null, 2);
+        })
+        .catch(err => {
+            document.getElementById("output").textContent = "Error: " + err;
+        });
+    }
+    </script>
 </body>
 </html>
