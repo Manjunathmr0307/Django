@@ -25,5 +25,7 @@ urlpatterns = [
     path('delete/', include('myapp.urls')),
     path('echo/', include('myapp.urls')),
     path('form/', include('myapp.urls')),
+    path('api/v1/', include('myapp.api.v1.urls')),
+    path('api/v2/', include('myapp.api.v2.urls')),
     path('', include('myapp.urls')),
 ]
